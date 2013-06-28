@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Text;
 
+// Peter Ripley - June 2013
+// Solution for Rally Software -Exercise 1-
 namespace WriteNumber
 {
     class Program
     {
-        static private string[] _digitNames = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+        static private string[] _oneNames = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
         static private string[] _tenNames = { "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
         static private string[] _teenNames = { "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
         static private string[] _placeValueNames = { "thousand", "million", "billion", "trillion", "quadrillion", "quintillion" };
@@ -17,23 +19,23 @@ namespace WriteNumber
 
             Console.WriteLine("Please enter a dollar amount between 0.00 and 1 quintillion.  Use 2 decimal places for the fractional amount.");
 
-            do
+            do // while (!String.IsNullOrEmpty(input))
             {
-                Console.Write("\r\nAmount (or [Enter] to quit)? ");
+                Console.Write("\r\nAmount (or [Enter] to quit) ? ");
                 input = Console.ReadLine();
 
                 if (!String.IsNullOrEmpty(input))
                 {
                     try
                     {
-                        // Proceed if the string provided can be converted to a number and that number is not greater than zero but not greater than 1 quintillion and has 2 decimal places. 
+                        // Proceed if the string provided can be converted to a number, that number is between 0 and 1 quintillion inclusive, and has 2 decimal places. 
                         if (Decimal.TryParse(input.Replace("$", null).Replace(",", null), out dollarAmount) & dollarAmount >= 0 && dollarAmount <= 1000000000000000000.00M && (dollarAmount % 1).ToString().Length == 4)
                         {
                             StringBuilder amountText = new StringBuilder();
                             string periodValueText = null;
                             int pennyAmount = Convert.ToInt32(dollarAmount % 1 * 100);
 
-                            // Loop for the period values from each element in the name array, down to thousands
+                             // Loop for the period values from each element in the name array, down to thousands
                             for (int e = _placeValueNames.Length; e >= 1; e--)
                             {
                                 periodValueText = GetPeriodValueText((long)(dollarAmount % (long)Math.Pow(1000, e + 1) / (long)Math.Pow(1000, e)));
@@ -76,13 +78,13 @@ namespace WriteNumber
                                     
             if(PeriodValue < 0 || PeriodValue > 999)
             {
-                throw new Exception("Value provided was outside of the accepted range.");
+                throw new ArgumentOutOfRangeException("PeriodValue");
             }
 
             // Build the period value string starting with hundreds.
             if (PeriodValue > 99)
             {
-                valueText.Append(_digitNames[(int)PeriodValue / 100 - 1]).Append(" hundred ");
+                valueText.Append(_oneNames[(int)PeriodValue / 100 - 1]).Append(" hundred ");
             }
             // Do we use a a teen name (thirteen, fourteen, etc.)...
             if (PeriodValue_Tens > 10 && PeriodValue_Tens < 20)
@@ -99,7 +101,7 @@ namespace WriteNumber
                 // ...and add a digit name if needed.
                 if (PeriodValue_Ones > 0)
                 {
-                    valueText.Append(_digitNames[PeriodValue_Ones - 1]);
+                    valueText.Append(_oneNames[PeriodValue_Ones - 1]);
                 }
             }
             return valueText.ToString();
