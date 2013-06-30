@@ -16,9 +16,9 @@ namespace WriteNumber
         {
             Decimal dollarAmount = 0M;
             string input = null;
-            int placeValueElementCount = _placeValueNames.Length;
+            int placeValueNameCount = _placeValueNames.Length;
 
-            Console.WriteLine(String.Format("Please enter a dollar amount between 0.01 and 1 {0}.  Use 2 decimal places for the fractional amount.", _placeValueNames[placeValueElementCount - 1]));
+            Console.WriteLine(String.Format("Please enter a dollar amount between 0.01 and 1 {0}.  Use 2 decimal places for the fractional amount.", _placeValueNames[placeValueNameCount - 1]));
 
             do // while (!String.IsNullOrEmpty(input))
             {
@@ -30,7 +30,7 @@ namespace WriteNumber
                     try
                     {
                         // Proceed if the string provided can be converted to a number, that number is between 0.01 and 1000 to the power of the number of _placeValueeNames[] elements inclusive, and has 2 decimal places. 
-                        if (Decimal.TryParse(input.Replace("$", null).Replace(",", null), out dollarAmount) & dollarAmount >= 0.01M && dollarAmount <= (decimal)Math.Pow(1000, placeValueElementCount) && (dollarAmount % 1).ToString().Length == 4)
+                        if (Decimal.TryParse(input.Replace("$", null).Replace(",", null), out dollarAmount) & dollarAmount >= 0.01M && dollarAmount <= (decimal)Math.Pow(1000, placeValueNameCount) && (dollarAmount % 1).ToString().Length == 4)
                         {
                             StringBuilder amountText = new StringBuilder();
                             string periodValueText = null;
