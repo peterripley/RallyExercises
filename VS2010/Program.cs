@@ -16,8 +16,9 @@ namespace WriteNumber
         {
             Decimal dollarAmount = 0M;
             string input = null;
+            int placeValueElementCount = _placeValueNames.Length;
 
-            Console.WriteLine("Please enter a dollar amount between 0.00 and 1 quintillion.  Use 2 decimal places for the fractional amount.");
+            Console.WriteLine(String.Format("Please enter a dollar amount between 0.01 and 1 {0}.  Use 2 decimal places for the fractional amount.", _placeValueNames[placeValueElementCount - 1]));
 
             do // while (!String.IsNullOrEmpty(input))
             {
@@ -28,37 +29,32 @@ namespace WriteNumber
                 {
                     try
                     {
-                        // Proceed if the string provided can be converted to a number and that number is not greater than zero but not greater than 1 quintillion and has 2 decimal places. 
-                        if (Decimal.TryParse(input.Replace("$", null).Replace(",", null), out dollarAmount) & dollarAmount >= 0 && dollarAmount <= 1000000000000000000.00M && (dollarAmount % 1).ToString().Length == 4)
+                        // Proceed if the string provided can be converted to a number, that number is between 0.01 and 1000 to the power of the number of _placeValueeNames[] elements inclusive, and has 2 decimal places. 
+                        if (Decimal.TryParse(input.Replace("$", null).Replace(",", null), out dollarAmount) & dollarAmount >= 0.01M && dollarAmount <= (decimal)Math.Pow(1000, placeValueElementCount) && (dollarAmount % 1).ToString().Length == 4)
                         {
                             StringBuilder amountText = new StringBuilder();
                             string periodValueText = null;
                             int pennyAmount = Convert.ToInt32(dollarAmount % 1 * 100);
 
-                            // Loop for the period values from each element in the name array, down to thousands
+                            // Get and append the text for the period values for each element in the name array, down to thousands
                             for (int e = _placeValueNames.Length; e >= 1; e--)
                             {
                                 periodValueText = GetPeriodValueText((long)(dollarAmount % (long)Math.Pow(1000, e + 1) / (long)Math.Pow(1000, e)));
-
                                 if (!String.IsNullOrEmpty(periodValueText))
                                 {
                                     amountText.Append(periodValueText).Append(" ").Append(_placeValueNames[e - 1]).Append(" ");
                                 }
                             }
-                            // Add the text for under the thousands period value, plus the fractional amount, and capitalize the first character 
+                            // Get and append the text for under a thousand, append the fractional amount, and capitalize the first character of our resultant string before displaying it.
                             periodValueText = GetPeriodValueText((long)(dollarAmount % 1000));
-
-                            if (!String.IsNullOrEmpty(periodValueText))
-                            {
-                                amountText.Append(periodValueText).Append(" ");
-                            }
-                            (amountText.Append(amountText.ToString() == String.Empty ? "zero and " : "and ").Append(pennyAmount.ToString("00")).Append("/100 dollars")[0]) = amountText[0].ToString().ToUpperInvariant()[0];
+                            amountText.Append(periodValueText).Append(String.IsNullOrEmpty(periodValueText) ? null : " ");
+                            amountText.Append(String.IsNullOrEmpty(amountText.ToString()) ? "zero " : null).Append("and ").Append(pennyAmount.ToString("00")).Append("/100 dollars")[0] = amountText[0].ToString().ToUpperInvariant()[0];
 
                             Console.WriteLine("\r\n" + amountText.ToString());
                         }
                         else
                         {
-                            Console.WriteLine("\r\nThe value provided was either not a valid dollar amount or was outside of the accepted range.");
+                            Console.WriteLine("\r\nThe value provided was either not a validly formatted dollar amount or was outside of the accepted range.");
                         }
                     }
                     catch (Exception ex)
@@ -75,12 +71,11 @@ namespace WriteNumber
             StringBuilder valueText = new StringBuilder();
             long PeriodValue_Tens = PeriodValue % 100;
             long PeriodValue_Ones = PeriodValue % 10;
-                                    
-            if(PeriodValue < 0 || PeriodValue > 999)
+
+            if (PeriodValue < 0 || PeriodValue > 999)
             {
                 throw new ArgumentOutOfRangeException("PeriodValue");
             }
-
             // Build the period value string starting with hundreds.
             if (PeriodValue > 99)
             {
