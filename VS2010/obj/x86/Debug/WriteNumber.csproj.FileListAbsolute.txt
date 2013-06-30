@@ -1,6 +1,0 @@
-C:\Projects\RallyExercises\VS2010\bin\Debug\writenum.exe.config
-C:\Projects\RallyExercises\VS2010\bin\Debug\writenum.exe
-C:\Projects\RallyExercises\VS2010\bin\Debug\writenum.pdb
-C:\Projects\RallyExercises\VS2010\obj\x86\Debug\writenum.exe
-C:\Projects\RallyExercises\VS2010\obj\x86\Debug\writenum.pdb
-C:\Projects\RallyExercises\VS2010\obj\x86\Debug\WriteNumber.csprojResolveAssemblyReference.cache

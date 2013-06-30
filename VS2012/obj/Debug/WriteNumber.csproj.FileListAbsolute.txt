@@ -1,5 +1,0 @@
-C:\Projects\RallyExercises\VS2012\bin\Debug\writenum.exe.config
-C:\Projects\RallyExercises\VS2012\bin\Debug\writenum.exe
-C:\Projects\RallyExercises\VS2012\bin\Debug\writenum.pdb
-C:\Projects\RallyExercises\VS2012\obj\Debug\writenum.exe
-C:\Projects\RallyExercises\VS2012\obj\Debug\writenum.pdb
