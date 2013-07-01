@@ -50,7 +50,7 @@ namespace WriteNumber
                             amountText.Append(periodValueText).Append(String.IsNullOrEmpty(periodValueText) ? null : " ");
                             amountText.Append(String.IsNullOrEmpty(amountText.ToString()) ? "zero " : null).Append("and ").Append(pennyAmount.ToString("00")).Append("/100 dollars")[0] = amountText[0].ToString().ToUpperInvariant()[0];
 
-                            Console.WriteLine("\r\n" + amountText.ToString());
+                            Console.WriteLine(String.Format("\r\n{0}", amountText));
                         }
                         else
                         {
